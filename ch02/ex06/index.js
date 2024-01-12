@@ -1,15 +1,1 @@
-export function fizzbuzz() {
-    let result = '';
-    for (let i = 1; i <= 100; i++) {
-        if (i % 3 === 0 && i % 5 === 0) {
-            result += 'FizzBuzz\n';
-        } else if (i % 3 === 0) {
-            result += 'Fizz\n';
-        } else if (i % 5 === 0) {
-            result += 'Buzz\n';
-        } else {
-            result += i + '\n';
-        }
-    }
-    return result;
-}
+export const fizzbuzz = () => [...Array(100)].map((_, i) => (i + 1) % 3 === 0 ? (i + 1) % 5 === 0 ? 'FizzBuzz' : 'Fizz' : (i + 1) % 5 === 0 ? 'Buzz' : (i + 1)|| i.toString()).join('\n')+'\n';

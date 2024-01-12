@@ -10,7 +10,9 @@
 - 開発者ツールを開いた状態のタブで HTML を開く場合
 ```
 Object
+{ answer: 0 }
 Object
+{ answer: 0 }
 ```
 - HTML を開いた状態のタブで開発者ツールを開く場合
 ```
@@ -19,7 +21,10 @@ Object
 ```
 
 3. 常に期待した結果を得るためにはどのようにコードを修正すべきか答えなさい。
-- let を　const　に変更します
+- lifeを別々に作る
 ```
 const life = { answer: 42 };
+console.log(life);
+const life2 = {...life};
+console.log(life);
 ```
