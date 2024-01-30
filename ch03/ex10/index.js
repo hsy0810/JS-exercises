@@ -4,3 +4,4 @@ const myObject = {
     city: 'New York'
 };
 for(const property in myObject) console.log(property);
+for(const property in myObject) console.log([property]);

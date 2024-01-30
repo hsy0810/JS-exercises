@@ -16,3 +16,4 @@ class Example {
 let obj = new Example("str", 5);
 console.log(+obj);
 console.log('' + obj);
+console.log(String(obj));

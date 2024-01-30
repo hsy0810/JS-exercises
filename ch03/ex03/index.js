@@ -1,5 +1,5 @@
 export const caculateFloat = (num1, num2) => {
-    const result = num1 - num2 < Number.EPSILON;
+    const result = num1 - num2 < 10** -10;
     return result;
 }
 
