@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test with and without</title>
+</head>
+<body>
+
+<script>
+    // withを利用する場合
+    function testWith() {
+        let myObject = {
+            name: 'Jack',
+            address: 'NewYork City',
+            email: 'test@test.com'
+        };
+        
+        with (myObject) {
+            console.log(name);
+            console.log(address);
+            console.log(email);
+        }
+    }
+
+    testWith();
+
+    // withを利用しない場合
+    function testWithout() {
+        let myObject = {
+            name: 'Jack',
+            address: 'NewYork City',
+            email: 'test@test.com'
+        };
+        
+        console.log(myObject.name);
+        console.log(myObject.address);
+        console.log(myObject.email);
+    }
+
+    testWithout();
+</script>
+
+</body>
+</html>
+
+//withを利用する場合と利用しない場合は、このコードだと速度はあまり変わらなかった
