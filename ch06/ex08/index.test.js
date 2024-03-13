@@ -1,4 +1,4 @@
-import { restrict, substract } from "./index.ts";
+import { restrict, subtract} from "./index.js";
 
 describe("restrict", () => {
   const symbol = Symbol("test");
@@ -42,6 +42,7 @@ describe("restrict", () => {
       expected: Object.create(parent),
     },
     {
+      // 通らなかった
       target: { parent: "parent" },
       template: Object.create(parent),
       expected: {},
