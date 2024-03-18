@@ -50,9 +50,6 @@ export function newHashTable() {
 
         bucket.push({ key, value });
         this.size++;
-
-         // ハッシュ値が衝突した場合はリンクリスト形式で複数のマッピングを保持する
-         // TODO
       },
 
 
