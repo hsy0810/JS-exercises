@@ -3,19 +3,14 @@
 
 
 
-`"👨‍👨‍👧‍👧"[0]` ＝＞　`👨‍👨‍👧‍👧‍`
-- 👨‍👨‍👧‍👧の最小描画単位は👨‍👨‍👧‍👧であるため、それ以上は分割できなかった。
-- でも[参考](https://0g0.org/topic/zero-width-joiner/)を見ると、四人に分けられそう。出力は`👨`にになるはず‍だが、自分はうまくいかなかった
+`"👨‍👨‍👧‍👧"[0]` ＝＞　`�`
+- 絵文字では、4バイトで一文字、たとえば「大人の男」は４バイト、そのうち2バイトはゼロ幅接合子。[0]だけ出力すると、その4バイトの中の2バイトしか出力されていないため、文字化けになった
 
-```js
-function createSegment(str) {
-    const segmenter = new Intl.Segmenter( { granularity: 'grapheme' });
-    const segments = Array.from(segmenter.segment(str), ({ segment }) => segment);
-    return segments;
-}
-```
 
 メモ：ゼロ幅接合子
+- [参考](https://0g0.org/topic/zero-width-joiner/)
 - ゼロ幅接合子(zero width joiner,ZWJ)という特別な文字「U+200D」を絵文字と組み合わせて使うと、 絵文字を合体させることができます。
 
 - 例えば「👨(男性 U+1F468)」、「👧(女子 U+1F467)」、「👦(男子 U+1F466)」の3つの文字を 「U+200D」でつなげると「👨‍👧‍👦」となります 
+
+
