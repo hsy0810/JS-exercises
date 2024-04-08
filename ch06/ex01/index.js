@@ -1,14 +1,15 @@
 // ハッシュ関数作成、javascirptのライブラリ cryptoを使用する。
 // 参考：https://reigle.info/entry/2022/08/03/100000#SHA-256%E3%81%AE%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E5%8C%96
 // sha256を指定する
-function stringToHash(str) {
+function stringToHash(str) { 
     const uint8 = new TextEncoder().encode(str);
     return crypto.subtle.digest('SHA-256', uint8)
             // 非同期処理
         .then(digest => Array.from(new Uint8Array(digest))
             .map(v => v.toString(16).padStart(2, '0')).join('')
         );
-}
+} 
+//＝＞Promiseのオブジェクトが返ってしまう。必ず毎回同じハッシュ値のリンクリストにどんどん追加されてしまう
 
 export function newHashTable() {
     return {

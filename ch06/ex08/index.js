@@ -8,7 +8,7 @@ export function restrict(target, template){
 }
 
 // 通らなかった
-export function subtract(target, ...sources) {
+export function substract(target, ...sources) {
     for (let source of sources) {
         for (let key of Object.keys(source)) {
             if (source.hasOwnProperty(key) && key in target) {
