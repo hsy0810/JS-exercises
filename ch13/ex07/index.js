@@ -53,7 +53,7 @@ async function h1() {
     //
     // 説明：
     // 新しい Promise が作成され、Promise コンストラクタは async 関数を引数として受け取る。
-    // async 関数内で、未定義の関数 errX() を呼び出して、Promise は .catch() でキャッチする。
+    // async 関数内で、未定義の関数 errX() を呼び出して、Promise は .catch() でキャッチできず、エラーが出す。
     new Promise(async () => {
       errX();
     }).catch((e) => log(e.message));

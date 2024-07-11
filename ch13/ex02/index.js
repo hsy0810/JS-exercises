@@ -110,7 +110,7 @@ function f7() {
     //
     // 説明：
     // wait1()の解決後にlogAが実行される。このPromiseはpに関連付けられる
-    // wait2()の解決後に.then()は、p が既に解決されているため、即座にlogAが実行される
+    // wait2()の解決後に.then()は、p が既に解決されているため、即座にlogBが実行される
     // 最後にlogCが実行される
     const p = wait1().then(logA);
     wait2()
