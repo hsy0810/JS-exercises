@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交通費精算フォーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-container label {
+            display: block;
+            margin-top: 10px;
+        }
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .form-container button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            color: red;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>交通費精算フォーム</h1>
+        <form id="expense-form">
+            <label for="date">日付:</label>
+            <input type="text" id="date" name="date" placeholder="YYYY-MM-DD" required>
+
+            <label for="amount">金額 (円):</label>
+            <input type="text" id="amount" name="amount" placeholder="例: 1000" required>
+
+            <label for="description">内容:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+            
+            <button type="submit">送信</button>
+        </form>
+        <div id="success-message" class="success-message">
+            精算が完了しました!
+        </div>
+    </div>
+    <script src="/ch15.01-03/ex12/message.js"></script>
+</body>
+</html>
