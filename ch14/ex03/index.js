@@ -24,20 +24,21 @@ export class IgnoreAccentPattern {
   
     [Symbol.match](string) {
         const normalizedString = this.removeDiacritics(string);
-        const matches = [];
-        let result;
+        return normalizedString.match(this.regex);
+        // const matches = [];
+        // let result;
         
-        // 正規表現で一致を検索
-        while ((result = this.regex.exec(normalizedString)) !== null) {
-          // 一致した位置を元の文字列から取得
-          const startIndex = result.index;
-          const endIndex = startIndex + result[0].length;
+        // // 正規表現で一致を検索
+        // while ((result = this.regex.exec(normalizedString)) !== null) {
+        //   // 一致した位置を元の文字列から取得
+        //   const startIndex = result.index;
+        //   const endIndex = startIndex + result[0].length;
           
-          // 元の文字列から一致部分を取り出す
-          matches.push(string.substring(startIndex, endIndex));
-        }
+        //   // 元の文字列から一致部分を取り出す
+        //   matches.push(string.substring(startIndex, endIndex));
+        // }
     
-        return matches.length > 0 ? matches : null;
+        // return matches.length > 0 ? matches : null;
       }
   }
   

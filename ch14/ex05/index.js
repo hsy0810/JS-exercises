@@ -7,10 +7,3 @@ export function taggedTemplate(strings, ...values) {
     
     return str;
   }
-
-  const result1 = taggedTemplate`${"A"}`;          // "string"
-const result2 = taggedTemplate`${{ x: 1 }}`;      // "object"
-
-
-console.log(result1); // "string"
-console.log(result2); // "object"

@@ -12,6 +12,7 @@
           const products = document.querySelectorAll("#productList li");
           products.forEach((product) => {
             // ドロップダウンリストで選んだものだけが表示される
+            // hiden=true/falseもあり
             if (selectedCategory === "all") {
                 product.style.display = "";
               } else if (product.getAttribute("data-category") === selectedCategory) {

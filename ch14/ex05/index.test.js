@@ -2,7 +2,9 @@ import { taggedTemplate } from "./index.js";
 
 test("string型", () => {
     const str = taggedTemplate`${"A"}`; 
+    const str2 = taggedTemplate`type of 'A' is ${"A"}`;
     expect(str).toBe('string');
+    expect(str2).toEqual("type of 'A' is string");
 });
 
 test("object型", () => {

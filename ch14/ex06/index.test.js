@@ -25,6 +25,7 @@ describe('useReflect', () => {
         const record = arr[0];
         const now = new Date();
 
+        // toStrictEqualはいい感じにオブジェクトを比較できる
         expect(record.methodName).toEqual('add');
         expect(record.args).toEqual([2, 3]);
         // 1秒以内の時間の差を許容

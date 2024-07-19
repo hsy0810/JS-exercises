@@ -27,3 +27,5 @@ export function useReflect(obj) {
   
     return { proxy, arr };
   }
+
+  //2重プロキシが期待される
