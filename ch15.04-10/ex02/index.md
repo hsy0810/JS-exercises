@@ -1,0 +1,11 @@
+[Tailwind CSS](https://tailwindcss.com/) がどういったフレームワークか調べなさい。
+- Tailwind CSSはutility classを活用したCSS フレームワーク
+- Tailwind CSS ではコンポーネントが準備されていないため、開発者が異なるutility classを適用してコンポーネントを作成していくことになるため、結果的にオリジナリティの高いサイトを作成することができる
+- メリット
+    - 柔軟性
+    - クラス名を考える必要がない
+    - ファイルサイズの最適化
+- デメリット
+    - 学習コスト
+    - 可読性
+- [参考](https://qiita.com/Hirohana/items/2a33c96cbdf494958a2e)

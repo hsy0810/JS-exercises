@@ -1,0 +1,98 @@
+/* ページ全体の背景色と中央配置のための基本スタイルを設定 */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 入力フォームの配置とスタイルを設定 */
+form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* テキスト入力フィールドの幅、パディング(余白）、ボーダーを設定 */
+input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+}
+
+/* ボタンの色、フォントサイズ、カーソルを変更 */
+button {
+  padding: 10px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  font-size: 16px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+/* ボタンにホバー時の背景色変更を適用 */
+button:hover {
+  background-color: #0056b3;
+}
+
+/* ToDoリストの箇条書きを除去し、全体の幅を指定 */
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 320px;
+}
+
+/* 各ToDoアイテムのボックススタイルと配置を設定 */
+li {
+  background-color: white;
+  margin: 5px 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ToDoアイテム内の表示コンテンツを横並びに配置 */
+li .view {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* チェックボックスの右マージンを設定 */
+li .toggle {
+  margin-right: 10px;
+}
+
+/* ToDoコンテンツ部分のスタイルを設定 */
+li .content {
+  flex-grow: 1;
+}
+
+/* 削除ボタンのスタイルとホバー時の色変更を設定 */
+li .destroy {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 削除ボタンのホバー時の色変更を適用 */
+li .destroy:hover {
+  color: #c0392b;
+}
+
+/* 完了したタスクのテキストを取り消し線にし、色を変更 */
+.completed .content {
+  text-decoration: line-through;
+  color: #888;
+}
