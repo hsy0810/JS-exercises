@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneDriveへファイルアップロード</title>
+</head>
+<body>
+    <h1>OneDriveへファイルアップロード</h1>
+    <form id="uploadForm">
+        <label for="accessToken">アクセストークン:</label>
+        <input type="text" id="accessToken" name="accessToken" required>
+        <br>
+        <label for="fileInput">ファイルを選択:</label>
+        <input type="file" id="fileInput" name="fileInput" required>
+        <br>
+        <button type="submit">アップロード</button>
+    </form>
+    <script src="./index.js"></script>
+</body>
+</html>

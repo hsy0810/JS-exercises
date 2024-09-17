@@ -79,6 +79,9 @@ link.addEventListener("click", (e) => {
   }
 
   /* NOTE: scrollTo または scrollIntoView でスムーズにスクロールしなさい  */
+  target.scrollIntoView({
+    behavior: 'smooth'
+  });
 });
 
     let entry = document.createElement("div");
