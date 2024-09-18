@@ -21,11 +21,11 @@ let grid = new Array(ROWS)
 
 // WebSocketの接続
 const socket = new WebSocket("ws://localhost:3003");
-
 socket.addEventListener("open", () => {
   console.log("Connected to WebSocket server");
 });
 
+// メッセージ受信
 socket.addEventListener("message", (event) => {
   const data = JSON.parse(event.data);
 
@@ -47,6 +47,11 @@ socket.addEventListener("message", (event) => {
       break;
   }
 });
+
+//  切断
+socket.onclose = () => {
+  console.log("Disconnected to WebSocket server");
+};
 
 canvas.addEventListener("click", (evt) => {
   const rect = canvas.getBoundingClientRect();
