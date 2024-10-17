@@ -63,7 +63,6 @@ export function serve(rootDirectory, port){
     });
 
 };
-export default app;
 
 serve(process.argv[2] || "tmp", parseInt(process.argv[3]) || 8000
 );

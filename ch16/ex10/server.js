@@ -12,22 +12,21 @@ function serve(rootDirectory, port) {
         const endpoint = url.parse(request.url).pathname;
 
         if (request.method === "PUT") {
-            // PUTリクエストを処理する
-            const filename = path.join(rootDirectory, endpoint);
-            const writeStream = fs.createWriteStream(filename);
-
-            // リクエストのストリームをファイルに書き込む
-            request.pipe(writeStream);
-
-            writeStream.on("finish", () => {
-                response.writeHead(201, { "Content-Type": "text/plain" });
-                response.end("File uploaded successfully.");
-            });
-
-            writeStream.on("error", (err) => {
-                response.writeHead(500, { "Content-Type": "text/plain" });
-                response.end(`Error uploading file: ${err.message}`);
-            });
+            // アップロード処理
+            // リクエストされたURLパスをもとに保存するファイルのパスを決定
+            const writeStream = fs.createWriteStream(`ch16/ex10/foo/bar${endpoint}`);
+            // リクエストボディからデータを受信するたびに発生
+            request.on("data", (data) => {
+                // ファイルストリームにデータを書き込む
+                writeStream.write(data);
+              });
+              // リクエストボディの受信が完了したときに発生
+              request.on("end", () => {
+                // クライアントにレスポンスを返して、書き込み終了
+                response.end();
+                // 書き込みストリームを閉じる（ファイルを保存して完了）
+                return writeStream.end();
+              });
         } else if (endpoint === "/test/mirror") {
             response.setHeader("Content-Type", "text/plain; charset=UTF-8");
             response.writeHead(200);

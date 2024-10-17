@@ -1,88 +1,105 @@
-import axios from 'axios';
 import { program } from 'commander';
-import dotenv from 'dotenv';
+// リクエストを設定
+const baseURL =
+"https://api.github.com/repos/hsy0810/JS-exercises";
+const TOKEN = process.env.GITHUB_TOKEN;
+const headers = {
+Authorization: `token ${TOKEN}`,
+"Content-Type": "application/json",
+};
 
-dotenv.config();
-
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const OWNER = 'hsy0810';
-const REPO = 'JS-exercises';
-
-const api = axios.create({
-    baseURL: 'https://api.github.com',
-    headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-        'Content-Type': 'application/json',
-    },
-});
-
-
-// Issue を作成する関数
+// Issue を作成できる
 async function createIssue(title, body) {
-    try {
-        console.log(`Creating issue in repo: ${OWNER}/${REPO}`);
-        console.log('Using GitHub Token:', GITHUB_TOKEN);
-        const response = await api.post(`/repos/${OWNER}/${REPO}/issues`, {
-            title,
-            body,
-        });
-        console.log('Issue created:', response.data.html_url);
-    } catch (error) {
-        console.error('Error creating issue:', error.response ? error.response.data.message : error.message);
-    }
+try {
+  const response = await fetch(`${baseURL}/issues`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      title,
+      body,
+    }),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    console.log(title, body);
+    console.log(response);
+    throw new Error(data.message);
+  }
+  console.log("Success to create issue", data.html_url);
+} catch (e) {
+  console.log(e.message);
 }
-
-//指定したIssueをクローズする関数
+}
+// 指定した Issue をクローズできる
 async function closeIssue(issueNumber) {
-    try {
-        const response = await api.patch(`/repos/${OWNER}/${REPO}/issues/${issueNumber}`, {
-            state: 'closed',
-        });
-        console.log(`Issue #${issueNumber} closed:`, response.data.html_url);
-    } catch (error) {
-        console.error('Error closing issue:', error.response ? error.response.data.message : error.message);
-    }
+try {
+  const response = await fetch(`${baseURL}/issues/${issueNumber}`, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify({
+      state: "closed",
+    }),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  console.log("Success to close issue", data.html_url);
+} catch (e) {
+  console.log(e.message);
 }
-
-//オープンな Issue の Id と Title の一覧を表示
-async function showListOfOpenIssues() {
-    try {
-        const response = await api.get(`/repos/${OWNER}/${REPO}/issues`, {
-            params: { state: 'open' },
-        });
-        response.data.forEach(issue => {
-            console.log(`#${issue.number}: ${issue.title}`);
-        });
-    } catch (error) {
-        console.error('Error fetching issues:', error.response ? error.response.data.message : error.message);
-    }
 }
-
-
+// オープンな Issue の Id と Title の一覧を表示できる
+async function showOpenIssues() {
+try {
+  const response = await fetch(`${baseURL}/issues?state=open`, {
+    method: "GET",
+    headers,
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    console.log(response);
+    throw new Error(data.message);
+  }
+  data.forEach((issue) => {
+    console.log(`#${issue.id}: ${issue.title}`);
+  });
+} catch (e) {
+  console.log(e.message);
+}
+}
 // コマンドライン設定
-program
-    .name('github-issue-cli')
-    .option('-v, --verbose', 'Enable verbose HTTP logging');
-
 // Issue を作成
 program
-    .command('create <title> [body]')
-    .action((title, body) => {
-        createIssue(title, body || '');
-    });
+  .command('create <title> [body]')
+  .action((title, body) => {
+    createIssue(title, body || '');
+  });
 
-// 指定した Issue をクローズ
+// Issueをクローズ
 program
-    .command('close <issueNumber>')
-    .action((issueNumber) => {
-        closeIssue(issueNumber);
-    });
+  .command('close <issueNumber>')
+  .action((issueNumber) => {
+    closeIssue(issueNumber);
+  });
 
-// オープンな Issue の Id と Title の一覧を表示
+// オープンな Issue 一覧を表示
 program
-    .command('list')
-    .action(() => {
-        showListOfOpenIssues();
-    });
+  .command('list')
+  .action(() => {
+    showOpenIssues();
+  });
+
+  program.parse(process.argv);
 
 
+// ヘルプを表示
+program
+  .command('help')
+  .action(() => {
+    program.outputHelp();
+  });
+
+//HTTPログ出力（うまく行けてない）
+program
+  .option('-v, --verbose', 'output verbose logging');

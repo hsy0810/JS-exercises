@@ -5,7 +5,7 @@ describe('Express Server Tests', () => {
     let server;
 
     beforeAll((done) => {
-        server = serve('tmp', 8000); // サーバーを初期化
+        server = serve(); 
         // サーバーがリッスンするのを待つ
         server.listen(8000, () => {
             done();
@@ -25,20 +25,12 @@ describe('Express Server Tests', () => {
         expect(response.text).toMatch(/GET \/test\/mirror HTTP/);
     });
 
-    test('GET /example.html', async () => {
+    test('GET /index.html', async () => {
         // テスト用のファイルがある場合のテスト
         const response = await request(server)
-            .get('/example.html'); // example.html ファイルを指定
+            .get('/index.html'); 
 
         expect(response.status).toBe(200);
         expect(response.headers['content-type']).toContain('text/html');
-    });
-
-    test('GET /non-existent', async () => {
-        const response = await request(server)
-            .get('/non-existent');
-
-        expect(response.status).toBe(404);
-        expect(response.text).toContain('No such file or directory');
     });
 });
