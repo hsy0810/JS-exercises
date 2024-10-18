@@ -65,32 +65,43 @@ async function runcmd(cmd, stdin = null, stdout = null) {
       });
       break;
 
+      // 出力リダイレクト
     case ">": // RedirCmd
       {
         // FIXME: ここを実装してね (2行程度)
         // HINT: cmd.file のストリームを createWriteStream で作成し runcmd を再帰的に呼び出す
+        // 指定されたコマンド (cmd.cmd) が実行され、その出力が writeStream を通じてファイルに書き込まれます。
+        // この動作により、通常の標準出力（ターミナルへの出力）がファイルにリダイレクトされます。
         const writeStream = fs.createWriteStream(cmd.file);
         await runcmd(cmd.cmd, stdin, writeStream);
       }
       break;
 
+      // 入力リダイレクト
     case "<": // RedirCmd
       {
         // FIXME: ここを実装してね (2行程度)
         // HINT: cmd.file のストリームを createReadStream で作成し runcmd を再帰的に呼び出す
+        //指定されたコマンドが実行され、その入力として readStream を使用します（ファイルの内容をコマンドの入力に使用）。
+        // この動作により、通常の標準入力（キーボード入力など）がファイルから読み取られます。
         const readStream = fs.createReadStream(cmd.file);
         await runcmd(cmd.cmd, readStream, stdout);
       }
       break;
 
+      // パイプ
     case "|": // PipeCmd
       {
         // FIXME: ここを実装してね (4行程度)
         // HINT: cmd.left と cmd.right に対して runcmd を再帰的に呼び出し Promise.all で待つ
         // HINT: left と right を繋ぐには new PassThrought() で作成したストリームを使用する
+        // コマンド間のデータを転送
         const passThrough = new PassThrough();
+        //Promise.all を使って、左右のコマンドの実行を並行して待ちます。これにより、パイプでデータがリアルタイムで次のコマンドに送られる仕組み
         await Promise.all([
+          // 左側のコマンド（パイプの左側）を実行し、その出力を passThrough ストリームに送ります
           runcmd(cmd.left, stdin, passThrough),
+          //右側のコマンド（パイプの右側）を実行し、その入力として passThrough を使用し、出力を stdout に送ります
           runcmd(cmd.right, passThrough, stdout),
         ]);
       }

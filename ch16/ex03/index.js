@@ -29,17 +29,24 @@ function encrypt64(text, key) {
 // generateKeyの返り値を、JSON形式でファイルに保存する(非同期)
 async function writeKey(key) {
     // ここを埋める（fs.promisesで鍵を保存）
+    // fs.promises.writeFile を使って、指定されたファイルにデータを書き込む
+    // Base64 形式の文字列に変換
     await fs.writeFile("key.json", JSON.stringify({ key: key.toString("base64") }));
 }
 
 // encrypt64の返り値を、JSON形式でファイルに保存する(非同期)
 async function writeEncrypt64(data) {
     // ここを埋める（fs.promisesで暗号データを保存）
+    // fs.writeFileは、Node.jsのfs.promisesモジュールを使ってファイルにデータを書き込む非同期処理です。
+// JSON.stringify(data)は、dataオブジェクトをJSON文字列に変換し、それをencryptedData.jsonというファイルに書き込みます。
     await fs.writeFile("encryptedData.json", JSON.stringify(data));
 }
 
 async function readKey() {
     // ここを埋める（return Promise<鍵>）
+    //key.json ファイルを読み込む。
+// 読み込んだJSONデータをパースし、Base64形式の鍵文字列を取得。
+// その鍵を Buffer に変換して返す。
     const keyData = await fs.readFile("key.json");
     const parsedKey = JSON.parse(keyData);
     return Buffer.from(parsedKey.key, "base64");
@@ -53,6 +60,7 @@ async function readEncrypt64() {
 }
 
 // 復号して平文を返す
+//encrypt64 で暗号化されたデータとIVを渡すことで、復号処理を行い、元のテキスト（平文）を返します。
 function decrypt64(data, key) {
     // ここを埋める
     const iv = Buffer.from(data.iv, "base64");

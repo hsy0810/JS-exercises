@@ -1,23 +1,31 @@
 import { threads } from 'worker_threads';
 
-if(threads.isMainThread) {
+//threads.isMainThread を使用して、現在のスレッドがメインスレッドかどうかを判定
+if (threads.isMainThread) {
     let num = 0; // number 型の変数 num を定義
-    const worker = new threads.Worker(__filename); 
+    const worker = new threads.Worker(__filename);
 
     // メインスレッド
+    //online" イベントは、ワーカースレッドが起動した際にメインスレッドで発火します。ワーカースレッドが準備完了したことを知らせるイベント
     worker.on("online", () => {
-        for(let i = 0; i < 10_000_000; i++) {
+        for (let i = 0; i < 10_000_000; i++) {
+            //インクリメント
             num++;
         }
-
+        //ワーカースレッドからのメッセージを受け取った際に num の値をコンソールに出力
         worker.on("message", () => {
-          console.log(num);
+            if (message === "increment") {
+                num++;
+            } else {
+                console.log(num);
+            }
+
         });
     });
-}else {
+} else {
     for (let i = 0; i < 10_000_000; i++) {
-       //"numをインクリメントせよ" のメッセージを送る
-       threads.parentPort.postMessage("increment"); 
+        //"numをインクリメントせよ" のメッセージを送る
+        threads.parentPort.postMessage("increment");
     }
     threads.parentPort.postMessage("done");
 }
