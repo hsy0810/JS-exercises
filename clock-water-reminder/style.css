@@ -67,6 +67,7 @@ input::placeholder {
   color: #b3b3b3;
 }
 
+/* Button Styles */
 button {
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   color: #fff;
@@ -86,6 +87,23 @@ button:hover {
 }
 
 button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Clear Goal Button Styles */
+#clear-goal {
+  background: linear-gradient(135deg, #ff4e4e, #ffb8b8); /* Red gradient for Clear Goal */
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#clear-goal:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+#clear-goal:active {
   transform: translateY(1px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }

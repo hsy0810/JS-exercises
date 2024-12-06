@@ -2,6 +2,7 @@
 const timeElement = document.getElementById('time');
 const dailyGoalInput = document.getElementById('daily-goal');
 const setGoalButton = document.getElementById('set-goal');
+const clearGoalButton = document.getElementById('clear-goal'); // ゴールをリセットするボタン
 const consumedElement = document.getElementById('consumed');
 const goalElement = document.getElementById('goal');
 const waterIntakeInput = document.getElementById('water-intake');
@@ -27,8 +28,19 @@ function setGoal() {
   goalElement.textContent = dailyGoal;
   consumed = 0;
   consumedElement.textContent = consumed;
+  saveToCookie();
   if (reminderInterval) clearInterval(reminderInterval);
   startReminder();
+}
+
+function clearGoal() {
+  dailyGoal = 0;
+  consumed = 0;
+  goalElement.textContent = dailyGoal;
+  consumedElement.textContent = consumed;
+  saveToCookie();
+  if (reminderInterval) clearInterval(reminderInterval);
+  reminderMessage.textContent = ''; // リマインダーをリセット
 }
 
 function logIntake() {
@@ -36,6 +48,7 @@ function logIntake() {
   consumed += intake;
   consumedElement.textContent = consumed;
   waterIntakeInput.value = '';
+  saveToCookie();
   checkGoal();
 }
 
@@ -55,9 +68,32 @@ function checkGoal() {
   }
 }
 
-// Initialize clock
+// Cookie Utilities
+function saveToCookie() {
+  document.cookie = `dailyGoal=${encodeURIComponent(dailyGoal)};path=/;max-age=86400`; // 1日後に期限切れ
+  document.cookie = `consumed=${encodeURIComponent(consumed)};path=/;max-age=86400`; // 1日後に期限切れ
+}
+
+function loadFromCookie() {
+  const cookies = document.cookie.split('; ').reduce((acc, curr) => {
+    const [key, value] = curr.split('=');
+    acc[key] = decodeURIComponent(value);
+    return acc;
+  }, {});
+
+  dailyGoal = parseInt(cookies.dailyGoal, 10) || 0;
+  consumed = parseInt(cookies.consumed, 10) || 0;
+
+  goalElement.textContent = dailyGoal;
+  consumedElement.textContent = consumed;
+}
+
+// Initialize clock and load state
 setInterval(updateTime, 1000);
+loadFromCookie();
+if (dailyGoal > 0) startReminder(); // 目標が設定されている場合、リマインダーを開始
 
 // Event Listeners
 setGoalButton.addEventListener('click', setGoal);
+clearGoalButton.addEventListener('click', clearGoal); // ゴールクリアボタンのクリック処理
 logIntakeButton.addEventListener('click', logIntake);
