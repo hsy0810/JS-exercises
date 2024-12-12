@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clock and Water Reminder</title>
+  <p id="reminder-message"></p>
+  <title>Clock and Water Drink Reminder</title>
   <link rel="stylesheet" href="/clock-water-reminder/style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Clock & Water Reminder</h1>
+    <h1>Drink Water Together!</h1>
     <div class="clock">
       <span id="time">--:--:--</span>
     </div>
     <div class="water-reminder">
-      <h2>Water Reminder</h2>
       <p>Daily Goal: <input type="number" id="daily-goal" placeholder="ml" /> ml</p>
       <button id="set-goal">Set Goal</button>
       <button id="clear-goal">Clear Goal</button> <!-- ゴールをリセットするボタン -->
       <p>Consumed: <span id="consumed">0</span> / <span id="goal">0</span> ml</p>
       <input type="number" id="water-intake" placeholder="ml drank" />
       <button id="log-intake">Log Intake</button>
-      <p id="reminder-message"></p>
+      <button id="start-reminder">start Reminder</button>
     </div>
   </div>
   <script src="/clock-water-reminder/index.js"></script>

@@ -1,12 +1,12 @@
-// DOM Elements
 const timeElement = document.getElementById('time');
 const dailyGoalInput = document.getElementById('daily-goal');
 const setGoalButton = document.getElementById('set-goal');
-const clearGoalButton = document.getElementById('clear-goal'); // ゴールをリセットするボタン
+const clearGoalButton = document.getElementById('clear-goal');
 const consumedElement = document.getElementById('consumed');
 const goalElement = document.getElementById('goal');
 const waterIntakeInput = document.getElementById('water-intake');
 const logIntakeButton = document.getElementById('log-intake');
+const startReminder = document.getElementById('start-reminder');
 const reminderMessage = document.getElementById('reminder-message');
 
 // State
@@ -14,7 +14,18 @@ let dailyGoal = 0;
 let consumed = 0;
 let reminderInterval;
 
-// Functions
+// Audio
+const drinkWaterAudio = new Audio('audio/drinkwater.wav');
+const setGoalAudio = new Audio('audio/setgoal.wav');
+const logIntakeAudio = new Audio('audio/logintake.wav');
+const successAudio = new Audio('audio/success.wav');
+
+function playAudio(audio) {
+  audio.play().catch((error) => {
+    console.error('音声の再生に失敗しました:', error);
+  });
+}
+
 function updateTime() {
   const now = new Date();
   const hours = now.getHours().toString().padStart(2, '0');
@@ -28,9 +39,8 @@ function setGoal() {
   goalElement.textContent = dailyGoal;
   consumed = 0;
   consumedElement.textContent = consumed;
+  playAudio(setGoalAudio);
   saveToCookie();
-  if (reminderInterval) clearInterval(reminderInterval);
-  startReminder();
 }
 
 function clearGoal() {
@@ -39,8 +49,6 @@ function clearGoal() {
   goalElement.textContent = dailyGoal;
   consumedElement.textContent = consumed;
   saveToCookie();
-  if (reminderInterval) clearInterval(reminderInterval);
-  reminderMessage.textContent = ''; // リマインダーをリセット
 }
 
 function logIntake() {
@@ -48,27 +56,29 @@ function logIntake() {
   consumed += intake;
   consumedElement.textContent = consumed;
   waterIntakeInput.value = '';
+  playAudio(logIntakeAudio);
   saveToCookie();
   checkGoal();
 }
 
-function startReminder() {
-  reminderInterval = setInterval(() => {
-    reminderMessage.textContent = 'Time to drink water!';
-    setTimeout(() => {
-      reminderMessage.textContent = '';
-    }, 5000); // Clear reminder after 5 seconds
-  }, 3600000); // 1 hour
+function createReminder() {
+  if (!dailyGoal) return;
+  reminderInterval = setInterval(function () {
+    playAudio(drinkWaterAudio);
+  }, 30000);
+
+  elements.startReminderButton.disabled = true;
 }
 
 function checkGoal() {
   if (consumed >= dailyGoal && dailyGoal > 0) {
-    alert('Congratulations! You have met your daily water goal!');
+    alert('今日の目標、達成しちゃったね！おめでとう！明日も一緒に頑張ろうね！');
+    playAudio(successAudio);
     clearInterval(reminderInterval);
   }
 }
 
-// Cookie Utilities
+// Cookie
 function saveToCookie() {
   document.cookie = `dailyGoal=${encodeURIComponent(dailyGoal)};path=/;max-age=86400`; // 1日後に期限切れ
   document.cookie = `consumed=${encodeURIComponent(consumed)};path=/;max-age=86400`; // 1日後に期限切れ
@@ -88,12 +98,11 @@ function loadFromCookie() {
   consumedElement.textContent = consumed;
 }
 
-// Initialize clock and load state
+// データ初期化
 setInterval(updateTime, 1000);
 loadFromCookie();
-if (dailyGoal > 0) startReminder(); // 目標が設定されている場合、リマインダーを開始
 
-// Event Listeners
 setGoalButton.addEventListener('click', setGoal);
-clearGoalButton.addEventListener('click', clearGoal); // ゴールクリアボタンのクリック処理
+clearGoalButton.addEventListener('click', clearGoal);
 logIntakeButton.addEventListener('click', logIntake);
+startReminder.addEventListener('click', createReminder);
